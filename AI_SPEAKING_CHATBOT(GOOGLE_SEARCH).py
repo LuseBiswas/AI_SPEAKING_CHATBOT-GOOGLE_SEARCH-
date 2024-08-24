@@ -1,9 +1,17 @@
-import pyttsx3
 import random
 import requests
 import pywhatkit
 from bs4 import BeautifulSoup
-text_speech = pyttsx3.init()
+from gtts import gTTS
+from playsound import playsound
+import os
+
+def speak(text):
+    tts = gTTS(text=text, lang='en')
+    filename = "temp.mp3"
+    tts.save(filename)
+    playsound(filename)
+    os.remove(filename)  # Remove the file after playing
 
 print(
     "\n----------------------------------------->Welcome to LUSE CHAT-BOT Service<-----------------------------------------")
@@ -20,39 +28,35 @@ list6 = ["I’m sorry, I didn’t catch what you said. Could you repeat it","I�
 #--------------------------------------------------------------------------------------------------
 
 while True:
- qs = input("You: ")
- if (qs == "hi"):
-  text_speech.say(random.choice(list1))
- elif (qs == "how are you"):
-     text_speech.say(random.choice(list2))
- elif ( qs == "hey" ):
-  text_speech.say(random.choice(list1))
- elif (qs == "what is your name"):
-     text_speech.say(random.choice(list3))
- elif (qs == "who is your creator"):
-     text_speech.say("My creator is Ritesh Biswas")
- elif (qs == "can you please help me"):
-     text_speech.say(random.choice(list4))
- elif (qs == "can you help me"):
-     text_speech.say(random.choice(list4))
- elif (qs == "bye"):
-    text_speech.say(random.choice(list5))
- elif (qs == "thanks"):
-     text_speech.say("Welcome, hope you like my company.")
- elif (qs == "search"):
-    import wikipedia as googleScrap
-    says=input("Enter you query:-")
-    text_speech.say("Here what i found on web")
-    try:
-     pywhatkit.search(says)
-     result=googleScrap.summary(says,3)
-     text_speech.say(result)
-    except Exception:
-     text_speech.say(random.choice(list6))
-
-
- else:
-  text_speech.say(random.choice(list6))
- text_speech.runAndWait()
-
-
+    qs = input("You: ")
+    if qs == "hi":
+        speak(random.choice(list1))
+    elif qs == "how are you":
+        speak(random.choice(list2))
+    elif qs == "hey":
+        speak(random.choice(list1))
+    elif qs == "what is your name":
+        speak(random.choice(list3))
+    elif qs == "who is your creator":
+        speak("My creator is Ritesh Biswas")
+    elif qs == "can you please help me":
+        speak(random.choice(list4))
+    elif qs == "can you help me":
+        speak(random.choice(list4))
+    elif qs == "bye":
+        speak(random.choice(list5))
+        break
+    elif qs == "thanks":
+        speak("Welcome, hope you like my company.")
+    elif qs == "search":
+        import wikipedia as googleScrap
+        says = input("Enter your query:- ")
+        speak("Here what I found on the web")
+        try:
+            pywhatkit.search(says)
+            result = googleScrap.summary(says, 3)
+            speak(result)
+        except Exception:
+            speak(random.choice(list6))
+    else:
+        speak(random.choice(list6))
